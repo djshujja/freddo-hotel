@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Main() {
   return (
-    <Box>
+    <Box width={"100%"} mt={5}>
       <BookingForm />
     </Box>
   );
