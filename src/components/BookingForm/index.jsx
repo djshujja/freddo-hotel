@@ -1,13 +1,22 @@
 import { Box, Button, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import ChargesForm from "./ChargesForm";
 import CustomerForm from "./CustomerForm";
 import DateForm from "./DateForm";
 import PersonalInfoForm from "./PersonalInfoForm";
-import React from "react";
+import React, { useState } from "react";
 import RoomForm from "./RoomForm";
 
 export default function BookingForm() {
+    const [data, setData] = useState(null);
+    const navigate = useNavigate();
+
+    const handleChange = (e) =>
+        setData({ ...data, [e.target.name]: e.target.value });
+    const handleRecords = () => navigate("/records");
+    const handleClear = (_) => setData(null);
+
     return (
         <Box>
             <Grid container>
@@ -21,8 +30,12 @@ export default function BookingForm() {
                             flexDirection: "column",
                         })}
                     >
-                        <CustomerForm />
-                        <DateForm />
+                        <CustomerForm data={data} handleChange={handleChange} />
+                        <DateForm
+                            data={data}
+                            handleChange={handleChange}
+                            setData={setData}
+                        />
                     </Box>
                 </Grid>
                 <Grid item xs={6}>
@@ -35,9 +48,12 @@ export default function BookingForm() {
                             flexDirection: "column",
                         })}
                     >
-                        <RoomForm />
-                        <PersonalInfoForm />
-                        <ChargesForm />
+                        <RoomForm data={data} handleChange={handleChange} />
+                        <PersonalInfoForm
+                            data={data}
+                            handleChange={handleChange}
+                        />
+                        <ChargesForm data={data} handleChange={handleChange} />
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -51,10 +67,18 @@ export default function BookingForm() {
                             mt: 4,
                         })}
                     >
-                        <Button variant={"contained"} color={"primary"}>
+                        <Button
+                            variant={"contained"}
+                            color={"primary"}
+                            onClick={handleRecords}
+                        >
                             View Records
                         </Button>
-                        <Button variant={"contained"} color={"error"}>
+                        <Button
+                            variant={"contained"}
+                            color={"error"}
+                            onClick={handleClear}
+                        >
                             Clear
                         </Button>
                         <Button variant={"contained"} color={"success"}>
