@@ -6,6 +6,7 @@ import {
     Grid,
     IconButton,
     Snackbar,
+    useForkRef,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -14,11 +15,12 @@ import ChargesForm from "./ChargesForm";
 import CustomerForm from "./CustomerForm";
 import DateForm from "./DateForm";
 import PersonalInfoForm from "./PersonalInfoForm";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RoomForm from "./RoomForm";
 
 export default function BookingForm() {
-    const [open, setOpen] = useState(true);
+    const [showLoaded, setShowLoaded] = useState(true);
+    const [showAdded, setShowAdded] = useState(false);
     const [data, setData] = useState(null);
     const navigate = useNavigate();
 
@@ -28,10 +30,16 @@ export default function BookingForm() {
     const handleClear = (_) => setData(null);
 
     const handleSave = (_) => {
-        setOpen(true);
+        setShowAdded(true);
         handleClear();
         console.table(data);
     };
+
+    useEffect(() => {
+        setTimeout(() => {
+            setShowLoaded(false);
+        }, 2000);
+    }, []);
 
     return (
         <Box>
@@ -100,7 +108,11 @@ export default function BookingForm() {
                             flexDirection: "column",
                         })}
                     >
-                        <RoomForm data={data} handleChange={handleChange} />
+                        <RoomForm
+                            setData={setData}
+                            data={data}
+                            handleChange={handleChange}
+                        />
                         <PersonalInfoForm
                             setData={setData}
                             data={data}
@@ -144,19 +156,32 @@ export default function BookingForm() {
                     </Box>
                 </Grid> */}
             </Grid>
-
             <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={(_) => setOpen(false)}
+                open={showAdded}
+                autoHideDuration={2500}
+                onClose={(_) => setShowAdded(false)}
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
                 <Alert
-                    onClose={(_) => setOpen(false)}
+                    onClose={(_) => setShowAdded(false)}
+                    severity='info'
+                    sx={{ width: "100%" }}
+                >
+                    Records Added Successfully!
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={showLoaded}
+                autoHideDuration={1200}
+                onClose={(_) => setShowLoaded(false)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+                <Alert
+                    onClose={(_) => setShowLoaded(false)}
                     severity='success'
                     sx={{ width: "100%" }}
                 >
-                    Record has been added!
+                    Records Loaded Successfully!
                 </Alert>
             </Snackbar>
         </Box>

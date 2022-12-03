@@ -1,13 +1,16 @@
 import { Box, TextField } from "@mui/material";
 import { FBox, Title } from "../Styled/Globals";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import TimePicker from "react-time-picker";
 export default function DateForm({ data, setData, handleChange }) {
+    const [inTime, setInTime] = useState("");
+    const [outTime, setOutTime] = useState("");
+
     useEffect(() => {
         const days = Math.abs(moment().diff(data?.lastRentDate, "days")) + 1;
         console.log(days);
@@ -49,14 +52,14 @@ export default function DateForm({ data, setData, handleChange }) {
             <FBox>
                 <Title>Check In Time:</Title>
                 <div>
-                    <TimePicker onChange={handleChange} />
-                </div>{" "}
+                    <TimePicker onChange={setInTime} value={inTime} />
+                </div>
             </FBox>
             <FBox>
                 <Title>Check Out Time:</Title>
                 <div>
-                    <TimePicker onChange={handleChange} />
-                </div>{" "}
+                    <TimePicker onChange={setOutTime} value={outTime} />
+                </div>
             </FBox>
             <FBox>
                 <Title>Total No. of Days</Title>

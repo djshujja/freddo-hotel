@@ -22,6 +22,7 @@ export default function PersonalInfoForm({ data, setData, handleChange }) {
                     fullWidth
                     size='small'
                     id='combo-box-demo'
+                    value={data?.gender}
                     options={["Male", "Female", ""]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
@@ -60,7 +61,8 @@ export default function PersonalInfoForm({ data, setData, handleChange }) {
                     fullWidth
                     sx={{ width: "100%" }}
                     size='small'
-                    id='roomType'
+                    id='identityType'
+                    value={data?.identityType}
                     options={["ID", "Passport"]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
@@ -68,7 +70,11 @@ export default function PersonalInfoForm({ data, setData, handleChange }) {
                             : setData({ ...data, identityType: "" })
                     }
                     renderInput={(params) => (
-                        <TextField {...params} fullWidth />
+                        <TextField
+                            {...params}
+                            fullWidth
+                            value={data?.identityType}
+                        />
                     )}
                 />
             </FBox>

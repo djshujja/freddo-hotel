@@ -21,6 +21,7 @@ export default function RoomForm({ data, setData, handleChange }) {
                     fullWidth
                     size='small'
                     id='roomType'
+                    value={data?.roomType}
                     options={["AC", "Fan"]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
@@ -28,7 +29,11 @@ export default function RoomForm({ data, setData, handleChange }) {
                             : setData({ ...data, roomType: "" })
                     }
                     renderInput={(params) => (
-                        <TextField {...params} fullWidth />
+                        <TextField
+                            {...params}
+                            value={data?.roomType}
+                            fullWidth
+                        />
                     )}
                 />
             </FBox>
