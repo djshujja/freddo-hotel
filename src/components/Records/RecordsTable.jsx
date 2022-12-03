@@ -249,13 +249,15 @@ function EnhancedTableHead(props) {
                         padding={"none"}
                         sortDirection={orderBy === headCell.id ? order : false}
                         sx={(theme) => ({
-                            padding: 2,
+                            paddingLeft: 2,
+                            minWidth: 150,
                         })}
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : "asc"}
                             onClick={createSortHandler(headCell.id)}
+                            sx={(theme) => ({ fontWeight: "bold" })}
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
@@ -349,7 +351,7 @@ export default function RecordsTable() {
     // }));
 
     const RecordCell = styled(TableCell)(({ theme }) => ({
-        paddingLeft: 4,
+        paddingLeft: "15px",
         paddingTop: 8,
         paddingBottom: 8,
     }));

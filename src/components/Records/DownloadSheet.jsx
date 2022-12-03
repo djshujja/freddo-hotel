@@ -16,7 +16,6 @@ export default function DownloadSheet({ data }) {
 
     return (
         <Box>
-            {/* <Box sx={(theme) => ({ display: "none" })}> */}
             <CSVLink
                 filename={moment().format("DD-MM-YYYY hh:mm A") + " Reports"}
                 ref={CSVRef}
@@ -30,7 +29,6 @@ export default function DownloadSheet({ data }) {
                     Download in Excel
                 </Button>
             </CSVLink>
-            {/* </Box> */}
         </Box>
     );
 }
