@@ -26,6 +26,7 @@ export default function DateForm({ data, setData, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
+                background: "#EEEFF0",
             })}
         >
             <FBox>

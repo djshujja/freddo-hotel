@@ -17,6 +17,7 @@ import DateForm from "./DateForm";
 import PersonalInfoForm from "./PersonalInfoForm";
 import React, { useEffect, useState } from "react";
 import RoomForm from "./RoomForm";
+import DriverForm from "./DriverForm";
 
 export default function BookingForm() {
     const [showLoaded, setShowLoaded] = useState(true);
@@ -52,6 +53,7 @@ export default function BookingForm() {
                             width: "100%",
                             alignItems: "center",
                             flexDirection: "column",
+                            mb: 5,
                         })}
                     >
                         <CustomerForm
@@ -59,11 +61,30 @@ export default function BookingForm() {
                             setData={setData}
                             handleChange={handleChange}
                         />
+                        <DriverForm data={data} handleChange={handleChange} />
+                    </Box>
+                </Grid>
+                <Grid item xs={6}>
+                    <Box
+                        sx={(theme) => ({
+                            rowGap: 2,
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        })}
+                    >
+                        <RoomForm
+                            setData={setData}
+                            data={data}
+                            handleChange={handleChange}
+                        />
                         <DateForm
                             data={data}
                             handleChange={handleChange}
                             setData={setData}
                         />
+                        <ChargesForm data={data} handleChange={handleChange} />
                         <Box
                             sx={(theme) => ({
                                 display: "flex",
@@ -96,29 +117,6 @@ export default function BookingForm() {
                                 Save
                             </Button>
                         </Box>
-                    </Box>
-                </Grid>
-                <Grid item xs={6}>
-                    <Box
-                        sx={(theme) => ({
-                            rowGap: 2,
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            flexDirection: "column",
-                        })}
-                    >
-                        <RoomForm
-                            setData={setData}
-                            data={data}
-                            handleChange={handleChange}
-                        />
-                        <PersonalInfoForm
-                            setData={setData}
-                            data={data}
-                            handleChange={handleChange}
-                        />
-                        <ChargesForm data={data} handleChange={handleChange} />
                     </Box>
                 </Grid>
                 {/* <Grid item xs={12}>

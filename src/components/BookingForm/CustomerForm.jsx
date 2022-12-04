@@ -14,6 +14,7 @@ export default function CustomerForm({ data, setData, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
+                background: "#EEEFF0",
             })}
         >
             <FBox>
@@ -106,6 +107,82 @@ export default function CustomerForm({ data, setData, handleChange }) {
                     )}
                 />
             </FBox>
+            <FBox>
+                <Title>Gender</Title>
+                <Autocomplete
+                    disablePortal
+                    fullWidth
+                    size='small'
+                    id='combo-box-demo'
+                    value={data?.gender}
+                    options={["Male", "Female", ""]}
+                    onChange={(_, value, choice) =>
+                        choice === "selectOption"
+                            ? setData({ ...data, gender: value })
+                            : setData({ ...data, gender: "" })
+                    }
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            fullWidth
+                            name={"gender"}
+                            variant={"outlined"}
+                            size={"small"}
+                            value={data?.gender}
+                            onChange={handleChange}
+                        />
+                    )}
+                />
+            </FBox>
+            <FBox>
+                <Title>Date Of Birth</Title>
+                <TextField
+                    name={"dob"}
+                    type={"date"}
+                    variant={"outlined"}
+                    size={"small"}
+                    value={data?.dob}
+                    fullWidth
+                    onChange={handleChange}
+                />
+            </FBox>
+            <FBox>
+                <Title>Identity Type</Title>
+                <Autocomplete
+                    disablePortal
+                    fullWidth
+                    sx={{ width: "100%" }}
+                    size='small'
+                    id='identityType'
+                    value={data?.identityType}
+                    options={["ID", "Passport"]}
+                    onChange={(_, value, choice) =>
+                        choice === "selectOption"
+                            ? setData({ ...data, identityType: value })
+                            : setData({ ...data, identityType: "" })
+                    }
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            fullWidth
+                            value={data?.identityType}
+                        />
+                    )}
+                />
+            </FBox>
+            {data?.identityType && (
+                <FBox>
+                    <Title>{data?.identityType} Number</Title>
+                    <TextField
+                        name={"idNumber"}
+                        value={data?.idNumber}
+                        onChange={handleChange}
+                        fullWidth
+                        variant='outlined'
+                        size='small'
+                    />
+                </FBox>
+            )}
         </Box>
     );
 }

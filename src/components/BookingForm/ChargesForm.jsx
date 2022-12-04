@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField } from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import { FBox, Title } from "../Styled/Globals";
 
 export default function ChargesForm({ data, handleChange }) {
@@ -12,6 +12,7 @@ export default function ChargesForm({ data, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
+                background: "#EEEFF0",
             })}
         >
             <FBox>
@@ -22,8 +23,12 @@ export default function ChargesForm({ data, handleChange }) {
                     size={"small"}
                     value={data?.subTotal}
                     onChange={handleChange}
-                    inputProps={{
-                        readOnly: true,
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position='start'>
+                                XOF
+                            </InputAdornment>
+                        ),
                     }}
                 />
             </FBox>
@@ -35,8 +40,12 @@ export default function ChargesForm({ data, handleChange }) {
                     size={"small"}
                     value={data?.tax}
                     onChange={handleChange}
-                    inputProps={{
-                        readOnly: true,
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position='start'>
+                                XOF
+                            </InputAdornment>
+                        ),
                     }}
                 />
             </FBox>
@@ -48,8 +57,12 @@ export default function ChargesForm({ data, handleChange }) {
                     size={"small"}
                     value={data?.total}
                     onChange={handleChange}
-                    inputProps={{
-                        readOnly: true,
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position='start'>
+                                XOF
+                            </InputAdornment>
+                        ),
                     }}
                 />
             </FBox>

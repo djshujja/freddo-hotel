@@ -12,6 +12,7 @@ export default function RoomForm({ data, setData, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
+                background: "#EEEFF0",
             })}
         >
             <FBox>
@@ -54,36 +55,6 @@ export default function RoomForm({ data, setData, handleChange }) {
                     variant={"outlined"}
                     size={"small"}
                     value={data?.roomExtNo}
-                    onChange={handleChange}
-                />
-            </FBox>
-            <FBox>
-                <Title>Driver Name</Title>
-                <TextField
-                    name={"driverName"}
-                    variant={"outlined"}
-                    size={"small"}
-                    value={data?.driverName}
-                    onChange={handleChange}
-                />
-            </FBox>
-            <FBox>
-                <Title>Driver Phone</Title>
-                <TextField
-                    name={"driverPhone"}
-                    variant={"outlined"}
-                    size={"small"}
-                    value={data?.driverPhone}
-                    onChange={handleChange}
-                />
-            </FBox>
-            <FBox>
-                <Title>Driver ID</Title>
-                <TextField
-                    name={"driverId"}
-                    variant={"outlined"}
-                    size={"small"}
-                    value={data?.driverId}
                     onChange={handleChange}
                 />
             </FBox>
