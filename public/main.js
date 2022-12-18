@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require("electron");
+require("../src/message-control/main");
 
 require("@electron/remote/main").initialize();
 
@@ -7,6 +8,8 @@ function createWindow() {
     width: 1000,
     height: 800,
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
       enableRemoteModule: true,
     },
   });

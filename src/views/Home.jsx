@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const _navigate = useNavigate();
-
   const handleProceed = () => _navigate("/main");
 
   return (
