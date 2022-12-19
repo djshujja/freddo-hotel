@@ -19,20 +19,21 @@ const knex = require("knex")({
     },
 });
 
-ipcMain.on("saveData-message", async (event, arg) => {
-    await knex("HotelData").insert(arg);
-    const all = await knex.select("*").from("HotelData");
-
-    event.reply("saveData-reply", {
-        success: true,
-        data: all,
-    });
+ipcMain.on("saveData-message", (event, arg) => {
+    knex("HotelData")
+        .insert(arg)
+        .then((res) => {
+            event.reply("saveData-reply", {
+                success: true,
+                data: res,
+            });
+        });
 });
 
-ipcMain.on("getData-message", (event, arg) => {
-    knex.select("*").from("HotelData");
+ipcMain.on("getData-message", async (event, arg) => {
+    const data = await knex.select("*").from("HotelData");
     event.reply("getData-reply", {
         success: true,
-        data: arg,
+        data,
     });
 });

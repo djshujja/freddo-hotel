@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import moment from "moment";
 import { styled } from "@mui/material";
+import getData from "../../message-control/getData";
 
 import { CSVLink, CSVDownload } from "react-csv";
 import DownloadSheet from "./DownloadSheet";
@@ -66,31 +67,31 @@ function createData(
     };
 }
 
-const rows = [
-    createData(
-        Math.floor(Math.random() * 999),
-        Math.floor(Math.random() * 999),
-        "Shujja",
-        "Sheeran",
-        "111 Abc Street",
-        "AB1 2CD",
-        "abc@def.com",
-        "012-345-678",
-        "England",
-        moment().format("DD/MM/YYYY"),
-        10,
-        "Single",
-        22,
-        4435,
-        "Male",
-        moment().format("DD/MM/YYYY"),
-        "NI Number",
-        330,
-        10,
-        340,
-        moment().format("DD/MM/YYYY")
-    ),
-];
+// const rows = [
+//     createData(
+//         Math.floor(Math.random() * 999),
+//         Math.floor(Math.random() * 999),
+//         "Shujja",
+//         "Sheeran",
+//         "111 Abc Street",
+//         "AB1 2CD",
+//         "abc@def.com",
+//         "012-345-678",
+//         "England",
+//         moment().format("DD/MM/YYYY"),
+//         10,
+//         "Single",
+//         22,
+//         4435,
+//         "Male",
+//         moment().format("DD/MM/YYYY"),
+//         "NI Number",
+//         330,
+//         10,
+//         340,
+//         moment().format("DD/MM/YYYY")
+//     ),
+// ];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -124,105 +125,65 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: "customerRef",
+        id: "CustomerRef",
         numeric: true,
         disablePadding: true,
         label: "Customer Ref",
     },
     {
-        id: "firstname",
+        id: "FirstName",
         numeric: false,
         label: "Firstname",
     },
     {
-        id: "surname",
+        id: "SurName",
         numeric: false,
         label: "Surname",
     },
     {
-        id: "address",
+        id: "Address",
         numeric: false,
         label: "Address",
     },
     {
-        id: "postCode",
+        id: "PostCode",
         numeric: false,
         label: "Post Code",
     },
     {
-        id: "email",
+        id: "Email",
         numeric: false,
         label: "Email",
     },
     {
-        id: "customerMobile",
+        id: "Mobile",
         numeric: false,
         label: "Customer Mobile",
     },
     {
-        id: "nationality",
+        id: "Nationality",
         numeric: false,
         label: "Nationality",
     },
     {
-        id: "lastRentDate",
-        numeric: true,
-        label: "Last Rent Date",
-    },
-    {
-        id: "totalDays",
+        id: "TotalDays",
         numeric: false,
         label: "Total Days",
     },
     {
-        id: "roomType",
-        numeric: false,
-        label: "Room Type",
-    },
-    {
-        id: "roomNo",
+        id: "RoomNo",
         numeric: false,
         label: "RoomNo",
     },
     {
-        id: "roomExtNo",
-        numeric: false,
-        label: "Room Ext. No.",
-    },
-    {
-        id: "gender",
-        numeric: false,
-        label: "Gender",
-    },
-    {
-        id: "Date of Birth",
-        numeric: false,
-        label: "dob",
-    },
-    {
-        id: "identityType",
-        numeric: false,
-        label: "Identity Type",
-    },
-    {
-        id: "subtotal",
+        id: "SubTotal",
         numeric: true,
-        label: "SubTotal",
+        label: "Sub Total",
     },
     {
-        id: "tax",
+        id: "Date",
         numeric: true,
-        label: "Tax",
-    },
-    {
-        id: "total",
-        numeric: true,
-        label: "Total ",
-    },
-    {
-        id: "createdAt",
-        numeric: true,
-        label: "Date Added",
+        label: "Booking Date",
     },
 ];
 
@@ -285,12 +246,28 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function RecordsTable() {
+    const [data, setData] = React.useState([]);
+    const [rows, setRows] = React.useState([]);
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    React.useEffect(() => {
+        setRows(data);
+    }, [data]);
+
+    React.useEffect(() => {
+        try {
+            getData().then((res) => {
+                setData(res.data);
+            });
+        } catch (e) {
+            console.log("Error while getting data ", e);
+        }
+    }, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
@@ -300,7 +277,7 @@ export default function RecordsTable() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.name);
+            const newSelected = rows?.map((n) => n.name);
             setSelected(newSelected);
             return;
         }
@@ -344,7 +321,7 @@ export default function RecordsTable() {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
     // const TableCell = styled(TableCellMUI)(({ theme }) => ({
     //     padding: 4,
@@ -371,7 +348,7 @@ export default function RecordsTable() {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={rows?.length}
                         />
                         <TableBody>
                             {stableSort(rows, getComparator(order, orderBy))
@@ -400,7 +377,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.customerRef}
+                                                {row?.CustomerRef}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -408,7 +385,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.firstname}
+                                                {row?.FirstName}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -416,7 +393,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.surname}
+                                                {row?.SurName}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -424,7 +401,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.address}
+                                                {row?.Address}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -432,7 +409,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.postCode}
+                                                {row?.PostCode}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -440,7 +417,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.email}
+                                                {row?.Email}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -448,7 +425,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.customerMobile}
+                                                {row?.Mobile}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -456,7 +433,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.nationality}
+                                                {row?.Nationality}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -464,7 +441,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.lastRentDate}
+                                                {row?.TotalDays}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -472,7 +449,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.totalDays}
+                                                {row?.RoomNo}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -480,7 +457,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.roomType}
+                                                XOF {row?.SubTotal}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -488,71 +465,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.roomNo}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.roomExtNo}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.gender}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.dob}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.identityType}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.subtotal}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.tax}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.total}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.createdAt}
+                                                {row?.Date}
                                             </RecordCell>
                                         </TableRow>
                                     );
@@ -572,7 +485,7 @@ export default function RecordsTable() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component='div'
-                    count={rows.length}
+                    count={rows?.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
