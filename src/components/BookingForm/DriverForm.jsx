@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, TextField } from "@mui/material";
+import { Autocomplete, Box, TextField } from "@mui/material";
 import { FBox, Title } from "../Styled/Globals";
 
-export default function DriverForm({ data, handleChange }) {
+export default function DriverForm({ data, setData, handleChange }) {
     return (
         <Box
             py={2}
@@ -18,33 +18,62 @@ export default function DriverForm({ data, handleChange }) {
             <FBox>
                 <Title>Driver Name</Title>
                 <TextField
-                    name={"driverName"}
+                    name={"DriverName"}
                     variant={"outlined"}
                     size={"small"}
-                    value={data?.driverName}
+                    value={data?.DriverName}
                     onChange={handleChange}
                 />
             </FBox>
             <FBox>
                 <Title>Driver Phone</Title>
                 <TextField
-                    name={"driverPhone"}
+                    name={"DriverPhone"}
                     variant={"outlined"}
                     size={"small"}
-                    value={data?.driverPhone}
+                    value={data?.DriverPhone}
                     onChange={handleChange}
                 />
             </FBox>
             <FBox>
-                <Title>Driver ID</Title>
-                <TextField
-                    name={"driverId"}
-                    variant={"outlined"}
-                    size={"small"}
-                    value={data?.driverId}
-                    onChange={handleChange}
+                <Title>Identity Type</Title>
+                <Autocomplete
+                    disablePortal
+                    fullWidth
+                    sx={{ width: "100%" }}
+                    size='small'
+                    id='DriverIDType'
+                    value={data?.DriverIDType}
+                    options={["ID", "Passport"]}
+                    onChange={(_, value, choice) =>
+                        choice === "selectOption"
+                            ? setData({ ...data, DriverIDType: value })
+                            : setData({ ...data, DriverIDType: "" })
+                    }
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            fullWidth
+                            value={data?.DriverIDType}
+                            required
+                        />
+                    )}
                 />
             </FBox>
+            {data?.DriverIDType && (
+                <FBox>
+                    <Title>{data?.DriverIDType} Number</Title>
+                    <TextField
+                        name={"DriverIDNo"}
+                        value={data?.DriverIDNo}
+                        onChange={handleChange}
+                        fullWidth
+                        variant='outlined'
+                        size='small'
+                        required
+                    />
+                </FBox>
+            )}
         </Box>
     );
 }

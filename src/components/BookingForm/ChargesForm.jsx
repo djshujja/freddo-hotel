@@ -2,7 +2,15 @@ import React from "react";
 import { Box, InputAdornment, TextField } from "@mui/material";
 import { FBox, Title } from "../Styled/Globals";
 
-export default function ChargesForm({ data, handleChange }) {
+export default function ChargesForm({ data, setData, handleChange }) {
+    React.useEffect(() => {
+        console.log("tax or total changed");
+        const SubTotal = Number(data?.Total) + Number(data?.Tax);
+        if (SubTotal) setData({ ...data, SubTotal });
+    }, [data?.Total, data?.Tax]);
+
+    React.useEffect(() => console.log("data", data), [data?.Tax]);
+
     return (
         <Box
             py={2}
@@ -16,29 +24,13 @@ export default function ChargesForm({ data, handleChange }) {
             })}
         >
             <FBox>
-                <Title>Subtotal</Title>
-                <TextField
-                    name={"subTotal"}
-                    variant={"outlined"}
-                    size={"small"}
-                    value={data?.subTotal}
-                    onChange={handleChange}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position='start'>
-                                XOF
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </FBox>
-            <FBox>
                 <Title>Tax</Title>
                 <TextField
-                    name={"tax"}
+                    name={"Tax"}
                     variant={"outlined"}
                     size={"small"}
-                    value={data?.tax}
+                    type={"number"}
+                    value={data?.Tax}
                     onChange={handleChange}
                     InputProps={{
                         startAdornment: (
@@ -52,10 +44,29 @@ export default function ChargesForm({ data, handleChange }) {
             <FBox>
                 <Title>Total</Title>
                 <TextField
-                    name={"total"}
+                    name={"Total"}
                     variant={"outlined"}
                     size={"small"}
-                    value={data?.total}
+                    value={data?.Total}
+                    type={"number"}
+                    onChange={handleChange}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position='start'>
+                                XOF
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </FBox>{" "}
+            <FBox>
+                <Title>Subtotal</Title>
+                <TextField
+                    disabled
+                    name={"SubTotal"}
+                    variant={"outlined"}
+                    size={"small"}
+                    value={data?.SubTotal}
                     onChange={handleChange}
                     InputProps={{
                         startAdornment: (

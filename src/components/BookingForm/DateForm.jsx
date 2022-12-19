@@ -12,10 +12,14 @@ export default function DateForm({ data, setData, handleChange }) {
     const [outTime, setOutTime] = useState("");
 
     useEffect(() => {
-        const days = Math.abs(moment().diff(data?.lastRentDate, "days")) + 1;
+        const days = Math.abs(moment().diff(data?.LastRentDate, "days")) + 1;
         console.log(days);
-        setData({ ...data, totalDays: days });
-    }, [data?.lastRentDate]);
+        setData({ ...data, TotalDays: days });
+    }, [data?.LastRentDate]);
+
+    useEffect(() => {
+        setData({ ...data, CheckInTime: inTime, CheckOutTime: outTime });
+    }, [inTime, outTime]);
 
     return (
         <Box
@@ -30,24 +34,29 @@ export default function DateForm({ data, setData, handleChange }) {
             })}
         >
             <FBox>
-                <Title>Current Date</Title>
+                <Title>Booking Date</Title>
                 <TextField
-                    name={"currentData"}
+                    type={"date"}
+                    onChange={handleChange}
+                    name={"Date"}
                     variant={"outlined"}
                     size={"small"}
-                    value={moment(moment()).format("DD/MM/YYYY")}
+                    value={data?.Date}
+                    required
+                    fullWidth
                 />
             </FBox>
             <FBox>
                 <Title>Last Rent Date</Title>
                 <TextField
                     type={"date"}
-                    name={"lastRentDate"}
+                    name={"LastRentDate"}
                     variant={"outlined"}
                     size={"small"}
                     fullWidth
                     onChange={handleChange}
-                    value={data?.lastRentDate}
+                    value={data?.LastRentDate}
+                    required
                 />
             </FBox>
             <FBox>
@@ -65,13 +74,13 @@ export default function DateForm({ data, setData, handleChange }) {
             <FBox>
                 <Title>Total No. of Days</Title>
                 <TextField
-                    name={"totalDays"}
+                    name={"TotalDays"}
                     variant={"outlined"}
                     size={"small"}
                     inputProps={{
                         readOnly: true,
                     }}
-                    value={data?.totalDays}
+                    value={data?.TotalDays}
                 />
             </FBox>
         </Box>

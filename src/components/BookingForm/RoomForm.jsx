@@ -21,19 +21,20 @@ export default function RoomForm({ data, setData, handleChange }) {
                     disablePortal
                     fullWidth
                     size='small'
-                    id='roomType'
-                    value={data?.roomType}
+                    id='RoomType'
+                    value={data?.RoomType}
                     options={["AC", "Fan"]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
-                            ? setData({ ...data, roomType: value })
-                            : setData({ ...data, roomType: "" })
+                            ? setData({ ...data, RoomType: value })
+                            : setData({ ...data, RoomType: "" })
                     }
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            value={data?.roomType}
+                            value={data?.RoomType}
                             fullWidth
+                            required
                         />
                     )}
                 />
@@ -41,20 +42,21 @@ export default function RoomForm({ data, setData, handleChange }) {
             <FBox>
                 <Title>Room No.</Title>
                 <TextField
-                    name={"roomNo"}
+                    name={"RoomNo"}
                     variant={"outlined"}
                     size={"small"}
-                    value={data?.roomNo}
+                    value={data?.RoomNo}
                     onChange={handleChange}
+                    required
                 />
             </FBox>
             <FBox>
                 <Title>Room Ext. No.</Title>
                 <TextField
-                    name={"roomExtNo"}
+                    name={"RoomExtNo"}
                     variant={"outlined"}
                     size={"small"}
-                    value={data?.roomExtNo}
+                    value={data?.RoomExtNo}
                     onChange={handleChange}
                 />
             </FBox>

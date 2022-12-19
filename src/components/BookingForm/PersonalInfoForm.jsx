@@ -23,21 +23,21 @@ export default function PersonalInfoForm({ data, setData, handleChange }) {
                     fullWidth
                     size='small'
                     id='combo-box-demo'
-                    value={data?.gender}
+                    value={data?.Gender}
                     options={["Male", "Female", ""]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
-                            ? setData({ ...data, gender: value })
-                            : setData({ ...data, gender: "" })
+                            ? setData({ ...data, Gender: value })
+                            : setData({ ...data, Gender: "" })
                     }
                     renderInput={(params) => (
                         <TextField
                             {...params}
                             fullWidth
-                            name={"gender"}
+                            name={"Gender"}
                             variant={"outlined"}
                             size={"small"}
-                            value={data?.gender}
+                            value={data?.Gender}
                             onChange={handleChange}
                         />
                     )}
@@ -56,7 +56,7 @@ export default function PersonalInfoForm({ data, setData, handleChange }) {
                 />
             </FBox>
             <FBox>
-                <Title>Identity Type</Title>
+                <Title>Identity Typxe</Title>
                 <Autocomplete
                     disablePortal
                     fullWidth
@@ -64,7 +64,7 @@ export default function PersonalInfoForm({ data, setData, handleChange }) {
                     size='small'
                     id='identityType'
                     value={data?.identityType}
-                    options={["ID", "Passport"]}
+                    options={["ID", "Passportx"]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
                             ? setData({ ...data, identityType: value })

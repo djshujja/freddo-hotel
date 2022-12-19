@@ -21,8 +21,8 @@ export default function CustomerForm({ data, setData, handleChange }) {
                 <Title>Customer Ref</Title>
                 <TextField
                     onChange={handleChange}
-                    value={data?.customerRef}
-                    name={"customerRef"}
+                    value={data?.CustomerRef}
+                    name={"CustomerRef"}
                     variant={"outlined"}
                     size={"small"}
                 />
@@ -30,42 +30,46 @@ export default function CustomerForm({ data, setData, handleChange }) {
             <FBox>
                 <Title>Firstname</Title>
                 <TextField
-                    name={"firstname"}
-                    value={data?.firstname}
+                    name={"FirstName"}
+                    value={data?.FirstName}
                     onChange={handleChange}
                     variant={"outlined"}
                     size={"small"}
+                    required
                 />
             </FBox>
             <FBox>
                 <Title>Surname</Title>
                 <TextField
-                    name={"surname"}
-                    value={data?.surname}
+                    name={"SurName"}
+                    value={data?.SurName}
                     onChange={handleChange}
                     variant={"outlined"}
                     size={"small"}
+                    required
                 />
             </FBox>
             <FBox>
                 <Title>Address</Title>
                 <TextField
-                    name={"address"}
-                    value={data?.address}
+                    name={"Address"}
+                    value={data?.Address}
                     onChange={handleChange}
                     variant={"outlined"}
                     size={"small"}
+                    required
                 />
             </FBox>
 
             <FBox>
                 <Title>Post Code</Title>
                 <TextField
-                    name={"postCode"}
-                    value={data?.postCode}
+                    name={"PostCode"}
+                    value={data?.PostCode}
                     onChange={handleChange}
                     variant={"outlined"}
                     size={"small"}
+                    required
                 />
             </FBox>
             <FBox>
@@ -82,8 +86,8 @@ export default function CustomerForm({ data, setData, handleChange }) {
             <FBox>
                 <Title>Mobile</Title>
                 <TextField
-                    name={"mobile"}
-                    value={data?.mobile}
+                    name={"Mobile"}
+                    value={data?.Mobile}
                     onChange={handleChange}
                     variant={"outlined"}
                     size={"small"}
@@ -99,11 +103,11 @@ export default function CustomerForm({ data, setData, handleChange }) {
                     options={[...countries]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
-                            ? setData({ ...data, nationality: value })
-                            : setData({ ...data, nationality: "" })
+                            ? setData({ ...data, Nationality: value })
+                            : setData({ ...data, Nationality: "" })
                     }
                     renderInput={(params) => (
-                        <TextField {...params} fullWidth />
+                        <TextField {...params} fullWidth required />
                     )}
                 />
             </FBox>
@@ -114,22 +118,23 @@ export default function CustomerForm({ data, setData, handleChange }) {
                     fullWidth
                     size='small'
                     id='combo-box-demo'
-                    value={data?.gender}
+                    value={data?.Gender}
                     options={["Male", "Female", ""]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
-                            ? setData({ ...data, gender: value })
-                            : setData({ ...data, gender: "" })
+                            ? setData({ ...data, Gender: value })
+                            : setData({ ...data, Gender: "" })
                     }
                     renderInput={(params) => (
                         <TextField
                             {...params}
                             fullWidth
-                            name={"gender"}
+                            name={"Gender"}
                             variant={"outlined"}
                             size={"small"}
-                            value={data?.gender}
+                            value={data?.Gender}
                             onChange={handleChange}
+                            required
                         />
                     )}
                 />
@@ -137,11 +142,11 @@ export default function CustomerForm({ data, setData, handleChange }) {
             <FBox>
                 <Title>Date Of Birth</Title>
                 <TextField
-                    name={"dob"}
+                    name={"DOB"}
                     type={"date"}
                     variant={"outlined"}
                     size={"small"}
-                    value={data?.dob}
+                    value={data?.DOB}
                     fullWidth
                     onChange={handleChange}
                 />
@@ -153,33 +158,35 @@ export default function CustomerForm({ data, setData, handleChange }) {
                     fullWidth
                     sx={{ width: "100%" }}
                     size='small'
-                    id='identityType'
-                    value={data?.identityType}
+                    id='IDType'
+                    value={data?.IDType}
                     options={["ID", "Passport"]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
-                            ? setData({ ...data, identityType: value })
-                            : setData({ ...data, identityType: "" })
+                            ? setData({ ...data, IDType: value })
+                            : setData({ ...data, IDType: "" })
                     }
                     renderInput={(params) => (
                         <TextField
                             {...params}
                             fullWidth
-                            value={data?.identityType}
+                            value={data?.IDType}
+                            required
                         />
                     )}
                 />
             </FBox>
-            {data?.identityType && (
+            {data?.IDType && (
                 <FBox>
-                    <Title>{data?.identityType} Number</Title>
+                    <Title>{data?.IDType} Number</Title>
                     <TextField
-                        name={"idNumber"}
-                        value={data?.idNumber}
+                        name={"IDNo"}
+                        value={data?.IDNo}
                         onChange={handleChange}
                         fullWidth
                         variant='outlined'
                         size='small'
+                        required
                     />
                 </FBox>
             )}
