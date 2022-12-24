@@ -14,7 +14,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "concurrently": "^7.6.0",
-    "electron": "^21.3.1",
     "knex": "^2.3.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
@@ -27,17 +26,19 @@
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
-  "main": "public/main.js",
+  "main": "public/electron.js",
   "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
+    "rbuild": "react-scripts build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron:serve": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm run electron:start\"",
-    "electron:build": "",
+    "electron:build": "electron-builder --publish never",    
+    "postinstall": "electron-builder install-app-deps",
     "electron:start": "wait-on tcp:3000 && electron .",
-    "rebuild-sqlite3": "electron-rebuild -f -w sqlite3"
+    "rebuild-sqlite3": "electron-rebuild -f -w sqlite3"  
   },
   "eslintConfig": {
     "extends": [
@@ -58,8 +59,14 @@
     ]
   },
   "devDependencies": {
+    "electron-builder": "^23.6.0",
+    "electron": "^21.3.1",
     "cross-env": "^7.0.3",
     "electron-rebuild": "^3.2.9",
     "wait-on": "^6.0.1"
-  }
+  },
+  "build": {
+    "files": [        "build/**/*",        "node_modules/**/*"    ]
+    
+}
 }

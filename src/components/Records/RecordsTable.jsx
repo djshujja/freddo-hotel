@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
+import { Typography, TextField } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -254,10 +255,30 @@ export default function RecordsTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+    const [dataDates, setDataDates] = React.useState({
+        to: null,
+        from: null,
+    });
     React.useEffect(() => {
         setRows(data);
     }, [data]);
+
+    React.useEffect(() => {
+        const _data = [];
+        const _to = moment(dataDates?.to).format("DD-MM-YYYY");
+        const _from = moment(dataDates?.from).format("DD-MM-YYYY");
+        console.log(_from, _to);
+        data?.forEach((_d) => {
+            const _date = moment(_d.Date).format("DD-MM-YYYY");
+            console.log(_date);
+            console.log(moment(_date).isBetween(_from, _to, "day", "[)"));
+            if (moment(_date).isBetween(_from, _to, "day", "[)")) {
+                console.log("is between", _d);
+                _data.push(_d);
+            }
+        });
+        console.log("final data", _data);
+    }, [dataDates?.to, dataDates.from]);
 
     React.useEffect(() => {
         try {
@@ -336,6 +357,40 @@ export default function RecordsTable() {
     return (
         <Box sx={{ width: "100%" }}>
             <Paper sx={{ width: "100%", mb: 2 }}>
+                {/* <Box>
+                    <Typography>Filter Data:</Typography>
+                    <Box
+                        sx={(theme) => ({
+                            display: "flex",
+                            alignItems: "center",
+                            columnGap: 5,
+                        })}
+                    >
+                        <TextField
+                            type={"date"}
+                            value={dataDates?.to}
+                            label={"To"}
+                            onChange={(e) =>
+                                setDataDates({
+                                    ...dataDates,
+                                    to: e.target.value,
+                                })
+                            }
+                        />
+                        <TextField
+                            type={"date"}
+                            value={dataDates?.from}
+                            label={"From"}
+                            onChange={(e) =>
+                                setDataDates({
+                                    ...dataDates,
+                                    from: e.target.value,
+                                })
+                            }
+                        />
+                    </Box>
+                </Box> */}
+
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}

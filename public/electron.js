@@ -1,7 +1,43 @@
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
+
+require("@electron/remote/main").initialize();
+
+const appURL = `file://${path.join(__dirname, '../build/index.html')}`
+
+
+function createWindow() {
+    const win = new BrowserWindow({
+        width: 1000,
+        height: 800,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
+        },
+    });
+
+    win.loadURL(appURL);
+}
+
+
+
+
+app.on("ready", createWindow);
+
+app.on("window-all-closed", function () {
+    if (process.platform !== "darwin") {
+        app.quit();
+    }
+});
+
+app.on("activate", function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+
 const { ipcMain } = require("electron");
 const sqlite3 = require("sqlite3");
-
-// var db = new sqlite3.Database("../../public/db.sql");
 
 const database = new sqlite3.Database("./public/db.sqlite3", (err) => {
     if (err) console.error("Database opening error: ", err);
@@ -13,7 +49,7 @@ const CREATE_TABLE_QUERY =
 database.run(CREATE_TABLE_QUERY);
 
 const knex = require("knex")({
-    client: "sqlite3", // or 'better-sqlite3'
+    client: "sqlite3",
     connection: {
         filename: "./public/db.sqlite3",
     },
