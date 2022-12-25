@@ -19,6 +19,7 @@ import getData from "../../message-control/getData";
 
 import { CSVLink, CSVDownload } from "react-csv";
 import DownloadSheet from "./DownloadSheet";
+import DetailsModal from "./DetailsModal";
 
 function createData(
     id,
@@ -189,14 +190,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-    const {
-        onSelectAllClick,
-        order,
-        orderBy,
-        numSelected,
-        rowCount,
-        onRequestSort,
-    } = props;
+    const { order, orderBy, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -212,14 +206,18 @@ function EnhancedTableHead(props) {
                         sortDirection={orderBy === headCell.id ? order : false}
                         sx={(theme) => ({
                             paddingLeft: 2,
-                            minWidth: 150,
+                            paddingTop: 2,
+                            paddingBottom: 2,
                         })}
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : "asc"}
                             onClick={createSortHandler(headCell.id)}
-                            sx={(theme) => ({ fontWeight: "bold" })}
+                            sx={(theme) => ({
+                                fontWeight: "bold",
+                                fontSize: 16,
+                            })}
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
@@ -250,10 +248,10 @@ export default function RecordsTable() {
     const [data, setData] = React.useState([]);
     const [rows, setRows] = React.useState([]);
     const [order, setOrder] = React.useState("asc");
-    const [orderBy, setOrderBy] = React.useState("calories");
-    const [selected, setSelected] = React.useState([]);
+    const [orderBy, setOrderBy] = React.useState("CustomerRef");
+    const [selected, setSelected] = React.useState({});
+    const [openModal, setOpenModal] = React.useState(true);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [dataDates, setDataDates] = React.useState({
         to: null,
@@ -282,11 +280,13 @@ export default function RecordsTable() {
 
     React.useEffect(() => {
         try {
-            console.log('Getting data from Backend: ')
-            getData().then((res) => {
-                console.log('Got Data', res)
-                setData(res.data);
-            }).catch(e => console.log('Error with getData()', e))
+            console.log("Getting data from Backend: ");
+            getData()
+                .then((res) => {
+                    console.log("Got Data", res);
+                    setData(res.data);
+                })
+                .catch((e) => console.log("Error with getData()", e));
         } catch (e) {
             console.log("Error while getting data ", e);
         }
@@ -298,33 +298,9 @@ export default function RecordsTable() {
         setOrderBy(property);
     };
 
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelected = rows?.map((n) => n.name);
-            setSelected(newSelected);
-            return;
-        }
-        setSelected([]);
-    };
-
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
-            );
-        }
-
-        setSelected(newSelected);
+    const handleClick = (_data) => {
+        setSelected(_data);
+        setOpenModal(true);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -336,19 +312,9 @@ export default function RecordsTable() {
         setPage(0);
     };
 
-    const handleChangeDense = (event) => {
-        setDense(event.target.checked);
-    };
-
-    const isSelected = (name) => selected.indexOf(name) !== -1;
-
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
-
-    // const TableCell = styled(TableCellMUI)(({ theme }) => ({
-    //     padding: 4,
-    // }));
 
     const RecordCell = styled(TableCell)(({ theme }) => ({
         paddingLeft: "15px",
@@ -358,52 +324,21 @@ export default function RecordsTable() {
 
     return (
         <Box sx={{ width: "100%" }}>
+            <DetailsModal
+                data={selected}
+                open={openModal}
+                handleClose={(_) => {
+                    setOpenModal(false);
+                    setSelected(false);
+                }}
+            />
             <Paper sx={{ width: "100%", mb: 2 }}>
-                {/* <Box>
-                    <Typography>Filter Data:</Typography>
-                    <Box
-                        sx={(theme) => ({
-                            display: "flex",
-                            alignItems: "center",
-                            columnGap: 5,
-                        })}
-                    >
-                        <TextField
-                            type={"date"}
-                            value={dataDates?.to}
-                            label={"To"}
-                            onChange={(e) =>
-                                setDataDates({
-                                    ...dataDates,
-                                    to: e.target.value,
-                                })
-                            }
-                        />
-                        <TextField
-                            type={"date"}
-                            value={dataDates?.from}
-                            label={"From"}
-                            onChange={(e) =>
-                                setDataDates({
-                                    ...dataDates,
-                                    from: e.target.value,
-                                })
-                            }
-                        />
-                    </Box>
-                </Box> */}
-
                 <TableContainer>
-                    <Table
-                        sx={{ minWidth: 750 }}
-                        aria-labelledby='tableTitle'
-                        size={dense ? "small" : "medium"}
-                    >
+                    <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle'>
                         <EnhancedTableHead
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
                             rowCount={rows?.length}
                         />
@@ -414,19 +349,16 @@ export default function RecordsTable() {
                                     page * rowsPerPage + rowsPerPage
                                 )
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
                                             onClick={(event) =>
-                                                handleClick(event, row.name)
+                                                handleClick(row)
                                             }
-                                            aria-checked={isItemSelected}
                                             tabIndex={-1}
                                             key={row?.id}
-                                            selected={isItemSelected}
                                         >
                                             <RecordCell
                                                 component='td'
@@ -530,7 +462,7 @@ export default function RecordsTable() {
                             {emptyRows > 0 && (
                                 <TableRow
                                     style={{
-                                        height: (dense ? 33 : 53) * emptyRows,
+                                        height: 53 * emptyRows,
                                     }}
                                 >
                                     <TableCell colSpan={6} />

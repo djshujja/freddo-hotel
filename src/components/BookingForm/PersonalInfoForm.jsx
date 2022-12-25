@@ -13,7 +13,8 @@ export default function PersonalInfoForm({ data, setData, handleChange }) {
             width={"380px"}
             sx={(theme) => ({
                 border: "1px solid #000",
-                background: "#EEEFF0",
+                background: "#EFF5F5", 
+                borderRadius:'5px'
             })}
         >
             <FBox>

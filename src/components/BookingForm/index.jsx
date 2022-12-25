@@ -21,7 +21,7 @@ import RoomForm from "./RoomForm";
 import send from "../../message-control/renderer";
 import { useNavigate } from "react-router-dom";
 
-export default function BookingForm() {
+export default function BookingForm({ oldData }) {
     const [showLoaded, setShowLoaded] = useState(false);
     const [showAdded, setShowAdded] = useState(false);
     const [data, setData] = useState({
@@ -59,6 +59,10 @@ export default function BookingForm() {
             setShowLoaded(false);
         }, 2000);
     }, []);
+
+    useEffect(() => {
+        if (oldData) setData({ ...oldData });
+    }, [oldData]);
 
     return (
         <Box onSubmit={handleSave} component={"form"}>
@@ -160,20 +164,6 @@ export default function BookingForm() {
                     sx={{ width: "100%" }}
                 >
                     Records Added Successfully!
-                </Alert>
-            </Snackbar>
-            <Snackbar
-                open={showLoaded}
-                autoHideDuration={1200}
-                onClose={(_) => setShowLoaded(false)}
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            >
-                <Alert
-                    onClose={(_) => setShowLoaded(false)}
-                    severity='success'
-                    sx={{ width: "100%" }}
-                >
-                    Records Loaded Successfully!
                 </Alert>
             </Snackbar>
         </Box>

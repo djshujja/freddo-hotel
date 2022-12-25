@@ -18,6 +18,7 @@ export default function Home() {
     return (
         <Box
             sx={(theme) => ({
+                background:'#070F4E',
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -26,25 +27,10 @@ export default function Home() {
                 minHeight: "100vh",
             })}
         >
-            <div
-                variant={"contained"}
-                sx={(theme) => ({
-                    backgroundColor: "#66fcf1",
-                    color: "#1f2833",
-                    ":hover": {
-                        backgroundColor: "#1f2833",
-                        color: "#66fcf1",
-                    },
-                })}
-                disableElevation
-                onClick={handleSQL}
-            >
-                SQL Test
-            </div>
             <Box
                 sx={(theme) => ({
-                    bgcolor: "#1f2833",
-                    color: "#66fcf1",
+                    bgcolor: "#BBE1FA",
+                    color: "#0F4C75",
                     p: 5,
                     borderRadius: 5,
                 })}
@@ -60,11 +46,11 @@ export default function Home() {
                 <Button
                     variant={"contained"}
                     sx={(theme) => ({
-                        backgroundColor: "#66fcf1",
-                        color: "#1f2833",
+                        backgroundColor: "#0F4C75",
+                        color: "#fff",
                         ":hover": {
-                            backgroundColor: "#1f2833",
-                            color: "#66fcf1",
+                            backgroundColor: "#BBE1FA",
+                            color: "#070F4E",
                         },
                     })}
                     disableElevation

@@ -9,6 +9,7 @@ const getDBPath = (filename) => {
     let userData = app.getPath('userData');
     const _path = path.join(userData);
     console.log('file on' , _path)
+    // TOOD: Create file if doesn't exist
     // fs.writeFile(`${_path}/db.sqlite3`, '', () => console.log('created'))
     // if (app.isPackaged) {
     //   base = base.replace('/app.asar', '', )

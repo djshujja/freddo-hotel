@@ -6,22 +6,25 @@ export default function Records() {
     return (
         <Box
             sx={(theme) => ({
+                bgcolor: "#070F4E",
+                minHeight: "100vh",
                 [theme.breakpoints.up("xs")]: {
-                    margin: "0px 25px",
+                    padding: "0px 25px",
                 },
             })}
         >
             <Box>
                 <Box
                     sx={(theme) => ({
-                        mt: 5,
-                        mb: 5,
+                        pt: 5,
+                        pb: 5,
                     })}
                 >
                     <Typography
                         textAlign={"center"}
                         variant={"h4"}
                         fontWeight={"bold"}
+                        color='#fff'
                     >
                         All Records
                     </Typography>
