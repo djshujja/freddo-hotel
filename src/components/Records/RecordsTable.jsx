@@ -282,9 +282,11 @@ export default function RecordsTable() {
 
     React.useEffect(() => {
         try {
+            console.log('Getting data from Backend: ')
             getData().then((res) => {
+                console.log('Got Data', res)
                 setData(res.data);
-            });
+            }).catch(e => console.log('Error with getData()', e))
         } catch (e) {
             console.log("Error while getting data ", e);
         }

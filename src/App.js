@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, HashRouter } from "react-router-dom";
 
 import Home from "./views/Home";
 import Main from "./views/Main";
@@ -11,7 +11,7 @@ import Menu from "./components/Layout/Menu";
 function App() {
     return (
         <React.Fragment>
-            <Router>
+            <HashRouter>
                 <div>
                     <Menu />
                     <Routes>
@@ -20,7 +20,7 @@ function App() {
                         <Route path='/records' element={<Records />} />
                     </Routes>
                 </div>
-            </Router>
+            </HashRouter>
         </React.Fragment>
     );
 }
