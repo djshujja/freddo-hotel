@@ -126,11 +126,11 @@ export default function CustomerForm({ data, setData, handleChange }) {
                     size='small'
                     id='combo-box-demo'
                     value={data?.Gender}
-                    options={["Male", "Female", ""]}
+                    options={["Male", "Female"]}
                     onChange={(_, value, choice) =>
                         choice === "selectOption"
                             ? setData({ ...data, Gender: value })
-                            : setData({ ...data, Gender: "" })
+                            : setData({ ...data, Gender: null })
                     }
                     renderInput={(params) => (
                         <TextField

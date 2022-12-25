@@ -1,12 +1,18 @@
 import "./App.css";
 
-import { Route, BrowserRouter as Router, Routes, HashRouter } from "react-router-dom";
+import {
+    Route,
+    BrowserRouter as Router,
+    Routes,
+    HashRouter,
+} from "react-router-dom";
 
 import Home from "./views/Home";
 import Main from "./views/Main";
 import Records from "./views/Records";
 import React from "react";
 import Menu from "./components/Layout/Menu";
+import Info from "./views/Info";
 
 function App() {
     return (
@@ -17,6 +23,7 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/main' element={<Main />} />
+                        <Route path='/info' element={<Info />} />
                         <Route path='/records' element={<Records />} />
                     </Routes>
                 </div>

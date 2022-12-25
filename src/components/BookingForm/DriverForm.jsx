@@ -12,8 +12,8 @@ export default function DriverForm({ data, setData, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
-                background: "#EFF5F5", 
-                borderRadius:'5px'
+                background: "#EFF5F5",
+                borderRadius: "5px",
             })}
         >
             <FBox>
@@ -56,7 +56,6 @@ export default function DriverForm({ data, setData, handleChange }) {
                             {...params}
                             fullWidth
                             value={data?.DriverIDType}
-                            required
                         />
                     )}
                 />
@@ -71,7 +70,6 @@ export default function DriverForm({ data, setData, handleChange }) {
                         fullWidth
                         variant='outlined'
                         size='small'
-                        required
                     />
                 </FBox>
             )}

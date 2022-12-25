@@ -42,6 +42,13 @@ export default function Menu() {
             >
                 View Records
             </Button>
+            <Button
+                variant='text'
+                color={"primary"}
+                onClick={(_) => navigate("/info")}
+            >
+                Info
+            </Button>
         </Box>
     );
 }
