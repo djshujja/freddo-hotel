@@ -8,17 +8,11 @@ import save from "../message-control/renderer";
 export default function Home() {
     const _navigate = useNavigate();
     const handleProceed = () => _navigate("/main");
-    const handleSQL = (e) => {
-        e.preventDefault();
-        save()
-            .then((res) => console.log("res from server", res))
-            .catch((e) => console.log(e));
-    };
 
     return (
         <Box
             sx={(theme) => ({
-                background:'#070F4E',
+                background: "#070F4E",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -30,7 +24,7 @@ export default function Home() {
             <Box
                 sx={(theme) => ({
                     bgcolor: "#BBE1FA",
-                    color: "#0F4C75",
+                    color: "#070F4E",
                     p: 5,
                     borderRadius: 5,
                 })}

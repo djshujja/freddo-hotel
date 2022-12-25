@@ -14,8 +14,8 @@ export default function CustomerForm({ data, setData, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
-                background: "#EFF5F5", 
-                borderRadius:'5px'
+                background: "#EFF5F5",
+                borderRadius: "5px",
             })}
         >
             <FBox>
@@ -78,7 +78,7 @@ export default function CustomerForm({ data, setData, handleChange }) {
                 <TextField
                     type={"email"}
                     name={"email"}
-                    value={data?.email}
+                    value={data?.Email}
                     onChange={handleChange}
                     variant={"outlined"}
                     size={"small"}
@@ -107,8 +107,14 @@ export default function CustomerForm({ data, setData, handleChange }) {
                             ? setData({ ...data, Nationality: value })
                             : setData({ ...data, Nationality: "" })
                     }
+                    value={data?.Nationality}
                     renderInput={(params) => (
-                        <TextField {...params} fullWidth required />
+                        <TextField
+                            {...params}
+                            value={data?.Nationality}
+                            fullWidth
+                            required
+                        />
                     )}
                 />
             </FBox>

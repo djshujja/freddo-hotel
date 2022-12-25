@@ -135,27 +135,7 @@ const headCells = [
     {
         id: "FirstName",
         numeric: false,
-        label: "Firstname",
-    },
-    {
-        id: "SurName",
-        numeric: false,
-        label: "Surname",
-    },
-    {
-        id: "Address",
-        numeric: false,
-        label: "Address",
-    },
-    {
-        id: "PostCode",
-        numeric: false,
-        label: "Post Code",
-    },
-    {
-        id: "Email",
-        numeric: false,
-        label: "Email",
+        label: "Full Name",
     },
     {
         id: "Mobile",
@@ -250,7 +230,7 @@ export default function RecordsTable() {
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("CustomerRef");
     const [selected, setSelected] = React.useState({});
-    const [openModal, setOpenModal] = React.useState(true);
+    const [openModal, setOpenModal] = React.useState(false);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [dataDates, setDataDates] = React.useState({
@@ -316,6 +296,10 @@ export default function RecordsTable() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
+    const onDelete = (ID) => {
+        const filtered = rows?.filter((_row) => _row?.ID !== ID);
+        setRows([...filtered]);
+    };
     const RecordCell = styled(TableCell)(({ theme }) => ({
         paddingLeft: "15px",
         paddingTop: 8,
@@ -327,6 +311,7 @@ export default function RecordsTable() {
             <DetailsModal
                 data={selected}
                 open={openModal}
+                onDelete={onDelete}
                 handleClose={(_) => {
                     setOpenModal(false);
                     setSelected(false);
@@ -354,6 +339,9 @@ export default function RecordsTable() {
                                     return (
                                         <TableRow
                                             hover
+                                            sx={(theme) => ({
+                                                cursor: "pointer",
+                                            })}
                                             onClick={(event) =>
                                                 handleClick(row)
                                             }
@@ -374,39 +362,7 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                {row?.FirstName}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.SurName}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.Address}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.PostCode}
-                                            </RecordCell>
-                                            <RecordCell
-                                                component='td'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row?.Email}
+                                                {row?.FirstName} {row?.SurName}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'
@@ -459,13 +415,23 @@ export default function RecordsTable() {
                                         </TableRow>
                                     );
                                 })}
-                            {emptyRows > 0 && (
+                            {rows?.length < 1 && (
                                 <TableRow
                                     style={{
                                         height: 53 * emptyRows,
                                     }}
                                 >
-                                    <TableCell colSpan={6} />
+                                    <TableCell
+                                        colSpan={6}
+                                        sx={(theme) => ({
+                                            display: "flex",
+                                            alignItems: "cneter",
+                                            justifyContent: "center",
+                                            textAlign: "center",
+                                        })}
+                                    >
+                                        No Data Found
+                                    </TableCell>
                                 </TableRow>
                             )}
                         </TableBody>

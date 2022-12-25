@@ -9,29 +9,29 @@ import {
 } from "@mui/material";
 import Close from "@mui/icons-material/Close";
 import React from "react";
-import Main from "../../views/Main";
-import BookingForm from "../BookingForm";
+import DetailsForm from "../DetailsForm";
 
-export default function DetailsModal({ data, open, handleClose }) {
+export default function DetailsModal({ data, open, handleClose, onDelete }) {
     return (
         <Modal
             open={open}
             onClose={handleClose}
             sx={(theme) => ({
-                diplay: "flex",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "auto",
             })}
         >
             <Box
                 sx={(theme) => ({
-                    display: "flex",
-                    height: "100%",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    maxHeight: "100%",
                 })}
             >
                 <Paper
                     sx={(theme) => ({
                         p: 2,
+                        px: 4,
                     })}
                 >
                     <Box>
@@ -40,6 +40,7 @@ export default function DetailsModal({ data, open, handleClose }) {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between",
+                                mb: 2,
                             })}
                         >
                             <Typography
@@ -47,15 +48,24 @@ export default function DetailsModal({ data, open, handleClose }) {
                                     fontWeight: "bold",
                                     fontSize: 24,
                                     textTransform: "uppercase",
+                                    textAlign: "center",
                                 })}
                             >
-                                Details
+                                Booking Details
                             </Typography>
-                            <Close onClick={handleClose} />
+                            <Close
+                                sx={(theme) => ({
+                                    cursor: "pointer",
+                                })}
+                                onClick={handleClose}
+                            />
                         </Box>
-
                         <Grid container>
-                            <BookingForm oldData={data} />
+                            <DetailsForm
+                                onDelete={onDelete}
+                                oldData={data}
+                                handleClose={handleClose}
+                            />
                         </Grid>
                     </Box>
                 </Paper>

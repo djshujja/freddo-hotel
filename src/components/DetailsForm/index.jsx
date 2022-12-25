@@ -18,8 +18,9 @@ import DriverForm from "./DriverForm";
 import RoomForm from "./RoomForm";
 import send from "../../message-control/renderer";
 import { useNavigate } from "react-router-dom";
+import deleteData from "../../message-control/deleteData";
 
-export default function BookingForm({ oldData }) {
+export default function DetailsForm({ oldData, handleClose, onDelete }) {
     const [showLoaded, setShowLoaded] = useState(false);
     const [showAdded, setShowAdded] = useState(false);
     const [data, setData] = useState({
@@ -31,23 +32,20 @@ export default function BookingForm({ oldData }) {
 
     const handleChange = (e) =>
         setData({ ...data, [e.target.name]: e.target.value });
-    const handleRecords = () => navigate("/records");
-    const handleSave = (_) => {
-        _.preventDefault();
-        const _data = {
-            ...data,
-            Date: moment(data?.Date).format("DD/MM/YYYY"),
-            LastRentDate: moment(data?.LastRentDate).format("DD/MM/YYYY"),
-            DOB: moment(data?.DOB).format("DD/MM/YYYY"),
-        };
-
-        send(_data)
+    const closeModal = () => handleClose();
+    const handleDelete = (_) => {
+        deleteData(oldData?.ID)
             .then((res) => {
-                console.log("Response from server ", res);
-                setShowAdded(true);
+                console.log("Data Deleted", res);
+                onDelete(oldData?.ID);
+                handleClose();
             })
-            .catch((e) => console.log("Error from server", e));
+            .catch((e) => console.log(`Error while deleting ${oldData?.ID}`));
     };
+
+    useEffect(() => {
+        setTimeout(() => setShowLoaded(false), 2000);
+    }, []);
 
     useEffect(() => {
         if (oldData) setData({ ...oldData });
@@ -55,8 +53,8 @@ export default function BookingForm({ oldData }) {
     }, [oldData]);
 
     return (
-        <Box onSubmit={handleSave} component={"form"}>
-            <Grid container>
+        <Box>
+            <Grid container columnSpacing={5}>
                 <Grid item xs={6}>
                     <Box
                         sx={(theme) => ({
@@ -119,35 +117,22 @@ export default function BookingForm({ oldData }) {
                                 type={"button"}
                                 variant={"contained"}
                                 color={"primary"}
-                                onClick={handleRecords}
+                                onClick={closeModal}
                             >
-                                View Records
+                                Close
                             </Button>
                             <Button
-                                type={"submit"}
+                                type={"button"}
                                 variant={"contained"}
-                                color={"success"}
+                                color={"error"}
+                                onClick={handleDelete}
                             >
-                                Save
+                                Delete
                             </Button>
                         </Box>
                     </Box>
                 </Grid>
             </Grid>
-            <Snackbar
-                open={showAdded}
-                autoHideDuration={5000}
-                onClose={(_) => setShowAdded(false)}
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            >
-                <Alert
-                    onClose={(_) => setShowAdded(false)}
-                    severity='success'
-                    sx={{ width: "100%" }}
-                >
-                    Added Successfully!
-                </Alert>
-            </Snackbar>
         </Box>
     );
 }
