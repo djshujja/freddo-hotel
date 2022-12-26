@@ -20,6 +20,7 @@ import getData from "../../message-control/getData";
 import { CSVLink, CSVDownload } from "react-csv";
 import DownloadSheet from "./DownloadSheet";
 import DetailsModal from "./DetailsModal";
+import { Title } from "../Styled/Globals";
 
 function createData(
     id,
@@ -243,14 +244,15 @@ export default function RecordsTable() {
 
     React.useEffect(() => {
         const _data = [];
-        const _to = moment(dataDates?.to).format("DD-MM-YYYY");
-        const _from = moment(dataDates?.from).format("DD-MM-YYYY");
-        console.log(_from, _to);
+        // const _to = moment(dataDates?.to).format("DD/MM/YYYY");
+        // const _from = moment(dataDates?.from).format("DD/MM/YYYY");
+
         data?.forEach((_d) => {
-            const _date = moment(_d.Date).format("DD-MM-YYYY");
-            console.log(_date);
-            console.log(moment(_date).isBetween(_from, _to, "day", "[)"));
-            if (moment(_date).isBetween(_from, _to, "day", "[)")) {
+            console.log(_d?.Date);
+            const _date = moment(_d.Date, "MM/DD/YYYY");
+            const _from = moment(dataDates?.from, "DD/MM/YYYY");
+            const _to = moment(dataDates?.to, "DD/MM/YYYY");
+            if (_date.isBetween(_from, _to, "days", "(]")) {
                 console.log("is between", _d);
                 _data.push(_d);
             }
@@ -317,6 +319,55 @@ export default function RecordsTable() {
                     setSelected(false);
                 }}
             />
+
+            {/* <Paper
+                sx={(theme) => ({
+                    width: "max-content",
+                    m: "auto",
+                    p: 5,
+                    mb: 5,
+                })}
+            >
+                <Box
+                    sx={(theme) => ({
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        columnGap: "25px",
+                        textAlign: "center",
+                    })}
+                >
+                    <Box>
+                        <Title>From</Title>
+                        <TextField
+                            type={"date"}
+                            onChange={(e) =>
+                                setDataDates({
+                                    ...dataDates,
+                                    from: e.target.value,
+                                })
+                            }
+                            size={"small"}
+                            value={dataDates?.from}
+                        />
+                    </Box>
+                    <Box>
+                        <Title>To</Title>
+                        <TextField
+                            type={"date"}
+                            onChange={(e) =>
+                                setDataDates({
+                                    ...dataDates,
+                                    to: e.target.value,
+                                })
+                            }
+                            size={"small"}
+                            value={dataDates?.to}
+                        />
+                    </Box>
+                </Box>
+            </Paper> */}
+
             <Paper sx={{ width: "100%", mb: 2 }}>
                 <TableContainer>
                     <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle'>
