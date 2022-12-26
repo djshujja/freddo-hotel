@@ -45,6 +45,13 @@ export default function Menu() {
             <Button
                 variant='text'
                 color={"primary"}
+                onClick={(_) => navigate("/finance")}
+            >
+                Finance
+            </Button>
+            <Button
+                variant='text'
+                color={"primary"}
                 onClick={(_) => navigate("/info")}
             >
                 Info

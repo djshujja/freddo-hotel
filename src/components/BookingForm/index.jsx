@@ -20,7 +20,7 @@ import send from "../../message-control/renderer";
 import { useNavigate } from "react-router-dom";
 
 export default function BookingForm({ oldData }) {
-    const [showLoaded, setShowLoaded] = useState(false);
+    const [error, setError] = useState(false);
     const [showAdded, setShowAdded] = useState(false);
     const [data, setData] = useState({
         Date: moment(moment(Date.now())).format("DD/MM/YYYY"),
@@ -34,6 +34,7 @@ export default function BookingForm({ oldData }) {
     const handleRecords = () => navigate("/records");
     const handleSave = (_) => {
         _.preventDefault();
+        if (error) return;
         const _data = {
             ...data,
             Date: moment(data?.Date).format("DD/MM/YYYY"),
@@ -96,6 +97,8 @@ export default function BookingForm({ oldData }) {
                             handleChange={handleChange}
                         />
                         <DateForm
+                            error={error}
+                            setError={setError}
                             data={data}
                             handleChange={handleChange}
                             setData={setData}
@@ -146,6 +149,14 @@ export default function BookingForm({ oldData }) {
                     sx={{ width: "100%" }}
                 >
                     Added Successfully!
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={error}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+                <Alert severity='error' sx={{ width: "100%" }}>
+                    Please fix the errors before you submit the form.
                 </Alert>
             </Snackbar>
         </Box>

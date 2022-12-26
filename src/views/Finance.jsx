@@ -1,18 +1,16 @@
-import BookingForm from "../components/BookingForm";
-import { Box } from "@mui/material";
 import React from "react";
+import { Box } from "@mui/material";
+import FinanceComponent from "../components/Finance";
 
-export default function Main() {
+export default function Finance() {
     return (
         <Box
-            width={"100%"}
-            pt={5}
             sx={(theme) => ({
                 bgcolor: "#070F4E",
                 minHeight: "100vh",
             })}
         >
-            <BookingForm />
+            <FinanceComponent />;
         </Box>
     );
 }

@@ -7,15 +7,27 @@ import moment from "moment/moment";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import TimePicker from "react-time-picker";
-export default function DateForm({ data, setData, handleChange }) {
+export default function DateForm({
+    error,
+    setError,
+    data,
+    setData,
+    handleChange,
+}) {
     const [inTime, setInTime] = useState("");
     const [outTime, setOutTime] = useState("");
 
     useEffect(() => {
-        const days = Math.abs(moment().diff(data?.LastRentDate, "days")) + 1;
+        const days =
+            Math.abs(moment(data?.Date).diff(data?.LastRentDate, "days")) + 1;
         console.log(days);
+        if (moment(data?.Date).isAfter(data?.LastRentDate)) {
+            setError(true);
+        } else {
+            setError(false);
+        }
         setData({ ...data, TotalDays: days });
-    }, [data?.LastRentDate]);
+    }, [data?.LastRentDate, data?.Date]);
 
     useEffect(() => {
         setData({ ...data, CheckInTime: inTime, CheckOutTime: outTime });
@@ -30,13 +42,14 @@ export default function DateForm({ data, setData, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
-                background: "#EFF5F5", 
-                borderRadius:'5px'
+                background: "#EFF5F5",
+                borderRadius: "5px",
             })}
         >
             <FBox>
                 <Title>Booking Date</Title>
                 <TextField
+                    key={data?.LastRentDate}
                     type={"date"}
                     onChange={handleChange}
                     name={"Date"}
@@ -44,6 +57,10 @@ export default function DateForm({ data, setData, handleChange }) {
                     size={"small"}
                     value={data?.Date}
                     required
+                    error={
+                        error && moment(data?.Date).isAfter(data?.LastRentDate)
+                    }
+                    helperText={error && "Booking Date doesn't seem right"}
                     fullWidth
                 />
             </FBox>
