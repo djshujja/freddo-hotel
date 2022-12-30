@@ -5,6 +5,7 @@ import {
     BrowserRouter as Router,
     Routes,
     HashRouter,
+    useLocation,
 } from "react-router-dom";
 
 import Home from "./views/Home";
@@ -15,6 +16,7 @@ import Menu from "./components/Layout/Menu";
 import Info from "./views/Info";
 import Employees from "./views/Employees";
 import Finance from "./views/Finance";
+import LoginScreen from "./views/LoginScreen";
 
 function App() {
     return (
@@ -23,7 +25,8 @@ function App() {
                 <div>
                     <Menu />
                     <Routes>
-                        <Route path='/' element={<Home />} />
+                        <Route path='/' element={<LoginScreen />} />
+                        <Route path='/home' element={<Home />} />
                         <Route path='/main' element={<Main />} />
                         <Route path='/finance' element={<Finance />} />
                         <Route path='/employees' element={<Employees />} />

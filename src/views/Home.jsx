@@ -4,10 +4,11 @@ import NavigateNext from "@mui/icons-material/NavigateNext";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import save from "../message-control/renderer";
-
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 export default function Home() {
     const _navigate = useNavigate();
     const handleProceed = () => _navigate("/main");
+    const handleLogout = () => _navigate("/");
 
     return (
         <Box
@@ -29,14 +30,21 @@ export default function Home() {
                     borderRadius: 5,
                 })}
             >
-                <Typography variant='h1' fontWeight={700}>
-                    FREDDO HOTEL
+                <Typography variant='h2' fontWeight={700}>
+                    FREDDO PARK HOTEL
                 </Typography>
                 <Typography variant={"h2"} fontSize={32}>
-                    Employee Portal
+                    Customers Portal
                 </Typography>
             </Box>
-            <Box my={2}>
+            <Box
+                sx={(theme) => ({
+                    my: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    rowGap: 2,
+                })}
+            >
                 <Button
                     variant={"contained"}
                     sx={(theme) => ({
@@ -51,6 +59,14 @@ export default function Home() {
                     onClick={handleProceed}
                 >
                     Proceed <NavigateNext />{" "}
+                </Button>
+                <Button
+                    variant={"contained"}
+                    color={"error"}
+                    disableElevation
+                    onClick={handleLogout}
+                >
+                    Logout{"  "} <ExitToAppIcon />
                 </Button>
             </Box>
         </Box>

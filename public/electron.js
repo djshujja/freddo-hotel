@@ -4,11 +4,26 @@ const sqlite3 = require("sqlite3");
 const { ipcMain } = require("electron");
 const fs = require("fs");
 
+function createFile(filename) {
+    fs.open(filename, "r", function (err, fd) {
+        if (err) {
+            fs.writeFile(filename, "", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("The file was saved!");
+            });
+        } else {
+            console.log("The file exists!");
+        }
+    });
+}
 const getDBPath = (filename) => {
     let base = app.getAppPath();
     let userData = app.getPath("userData");
     const _path = path.join(userData);
     console.log("file on", _path);
+    createFile(`${_path}/db.sqlite3`);
     // TOOD: Create file if doesn't exist
     // fs.writeFile(`${_path}/db.sqlite3`, '', () => console.log('created'))
     // if (app.isPackaged) {

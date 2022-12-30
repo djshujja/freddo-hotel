@@ -29,7 +29,6 @@ export default function Info() {
                                 fontStyle: "italic",
                             })}
                         >
-                            {" "}
                             Developed By
                         </Typography>
                         <Typography
@@ -40,7 +39,7 @@ export default function Info() {
                                 textTransform: "uppercase",
                             })}
                         >
-                            Computer Data Shred
+                            Shujja - Computer Data Shred
                         </Typography>
                         <Typography
                             component={"p"}
@@ -48,7 +47,6 @@ export default function Info() {
                                 fontStyle: "italic",
                             })}
                         >
-                            {" "}
                             Developed For
                         </Typography>
                         <Typography
@@ -62,7 +60,11 @@ export default function Info() {
                             Freddo Hotel
                         </Typography>
                         <Typography>
-                            Please contact the developers for support.
+                            Please
+                            <a href='mailto:shujjaahmed999@gmail.com'>
+                                contact
+                            </a>
+                            the developers for support.
                         </Typography>
                     </Box>
                 </Box>
