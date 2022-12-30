@@ -27,7 +27,7 @@ export default function DetailsForm({ oldData, handleClose, onDelete }) {
     const [data, setData] = useState({
         Date: moment(moment(Date.now())).format("DD/MM/YYYY"),
         Total: 0,
-        Tax: 0,
+        Rate: 0,
     });
     const navigate = useNavigate();
 

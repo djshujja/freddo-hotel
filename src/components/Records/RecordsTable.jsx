@@ -17,58 +17,8 @@ import moment from "moment";
 import { styled } from "@mui/material";
 import getData from "../../message-control/getData";
 
-import { CSVLink, CSVDownload } from "react-csv";
 import DownloadSheet from "./DownloadSheet";
 import DetailsModal from "./DetailsModal";
-import { Title } from "../Styled/Globals";
-
-function createData(
-    id,
-    customerRef,
-    firstname,
-    surname,
-    address,
-    postCode,
-    email,
-    customerMobile,
-    nationality,
-    lastRentDate,
-    totalDays,
-    roomType,
-    roomNo,
-    roomExtNo,
-    gender,
-    dob,
-    identityType,
-    subtotal,
-    tax,
-    total,
-    createdAt
-) {
-    return {
-        id,
-        customerRef,
-        firstname,
-        surname,
-        address,
-        postCode,
-        email,
-        customerMobile,
-        nationality,
-        lastRentDate,
-        totalDays,
-        roomType,
-        roomNo,
-        roomExtNo,
-        gender,
-        dob,
-        identityType,
-        subtotal,
-        tax,
-        total,
-        createdAt,
-    };
-}
 
 // const rows = [
 //     createData(
@@ -156,12 +106,17 @@ const headCells = [
     {
         id: "RoomNo",
         numeric: false,
-        label: "RoomNo",
+        label: "Room#",
     },
     {
-        id: "SubTotal",
+        id: "Rate",
         numeric: true,
-        label: "Sub Total",
+        label: "Rate",
+    },
+    {
+        id: "Total",
+        numeric: true,
+        label: "Total",
     },
     {
         id: "Date",
@@ -453,7 +408,15 @@ export default function RecordsTable() {
                                                 scope='row'
                                                 padding='none'
                                             >
-                                                XOF {row?.SubTotal}
+                                                XOF {row?.Rate}
+                                            </RecordCell>
+                                            <RecordCell
+                                                component='td'
+                                                id={labelId}
+                                                scope='row'
+                                                padding='none'
+                                            >
+                                                XOF {row?.Total}
                                             </RecordCell>
                                             <RecordCell
                                                 component='td'

@@ -4,12 +4,9 @@ import { DBox, Title, ValueField } from "../Styled/Globals";
 
 export default function ChargesForm({ data, setData, handleChange }) {
     React.useEffect(() => {
-        console.log("tax or total changed");
-        const SubTotal = Number(data?.Total) + Number(data?.Tax);
-        if (SubTotal) setData({ ...data, SubTotal });
-    }, [data?.Total, data?.Tax]);
-
-    React.useEffect(() => console.log("data", data), [data?.Tax]);
+        const Total = Number(data?.Rate) * Number(data?.TotalDays);
+        if (Total) setData({ ...data, Total });
+    }, [data?.Rate]);
 
     return (
         <Box
@@ -26,16 +23,12 @@ export default function ChargesForm({ data, setData, handleChange }) {
             })}
         >
             <DBox>
-                <Title>Tax</Title>
-                <ValueField>XOF {data?.Tax}</ValueField>
+                <Title>Rate</Title>
+                <ValueField>XOF {data?.Rate}</ValueField>
             </DBox>
             <DBox>
                 <Title>Total</Title>
                 <ValueField>XOF {data?.Total}</ValueField>
-            </DBox>
-            <DBox>
-                <Title>Subtotal</Title>
-                <ValueField>XOF {data?.SubTotal}</ValueField>
             </DBox>
         </Box>
     );

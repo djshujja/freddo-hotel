@@ -4,12 +4,9 @@ import { FBox, Title } from "../Styled/Globals";
 
 export default function ChargesForm({ data, setData, handleChange }) {
     React.useEffect(() => {
-        console.log("tax or total changed");
-        const SubTotal = Number(data?.Total) + Number(data?.Tax);
-        if (SubTotal) setData({ ...data, SubTotal });
-    }, [data?.Total, data?.Tax]);
-
-    React.useEffect(() => console.log("data", data), [data?.Tax]);
+        const Total = Number(data?.TotalDays) * Number(data?.Rate);
+        if (Total) setData({ ...data, Total });
+    }, [data?.Rate]);
 
     return (
         <Box
@@ -20,18 +17,18 @@ export default function ChargesForm({ data, setData, handleChange }) {
             rowGap={1}
             sx={(theme) => ({
                 border: "1px solid #000",
-                background: "#EFF5F5", 
-                borderRadius:'5px'
+                background: "#EFF5F5",
+                borderRadius: "5px",
             })}
         >
             <FBox>
-                <Title>Tax</Title>
+                <Title>Rate</Title>
                 <TextField
-                    name={"Tax"}
+                    name={"Rate"}
                     variant={"outlined"}
                     size={"small"}
                     type={"number"}
-                    value={data?.Tax}
+                    value={data?.Rate}
                     onChange={handleChange}
                     InputProps={{
                         startAdornment: (
@@ -60,24 +57,6 @@ export default function ChargesForm({ data, setData, handleChange }) {
                     }}
                 />
             </FBox>{" "}
-            <FBox>
-                <Title>Subtotal</Title>
-                <TextField
-                    disabled
-                    name={"SubTotal"}
-                    variant={"outlined"}
-                    size={"small"}
-                    value={data?.SubTotal}
-                    onChange={handleChange}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position='start'>
-                                XOF
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </FBox>
         </Box>
     );
 }
