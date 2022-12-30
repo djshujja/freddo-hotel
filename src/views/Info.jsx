@@ -60,10 +60,10 @@ export default function Info() {
                             Freddo Hotel
                         </Typography>
                         <Typography>
-                            Please
+                            Please{" "}
                             <a href='mailto:shujjaahmed999@gmail.com'>
                                 contact
-                            </a>
+                            </a>{" "}
                             the developers for support.
                         </Typography>
                     </Box>

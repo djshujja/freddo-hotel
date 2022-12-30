@@ -19,10 +19,11 @@ import RoomForm from "./RoomForm";
 import send from "../../message-control/renderer";
 import { useNavigate } from "react-router-dom";
 import deleteData from "../../message-control/deleteData";
+import DeleteModal from "./DeleteModal";
 
 export default function DetailsForm({ oldData, handleClose, onDelete }) {
     const [showLoaded, setShowLoaded] = useState(false);
-    const [showAdded, setShowAdded] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [data, setData] = useState({
         Date: moment(moment(Date.now())).format("DD/MM/YYYY"),
         Total: 0,
@@ -54,6 +55,11 @@ export default function DetailsForm({ oldData, handleClose, onDelete }) {
 
     return (
         <Box>
+            <DeleteModal
+                open={openDeleteModal}
+                onDelete={handleDelete}
+                handleClose={(_) => setOpenDeleteModal(false)}
+            />
             <Grid container columnSpacing={5}>
                 <Grid item xs={6}>
                     <Box
@@ -125,7 +131,7 @@ export default function DetailsForm({ oldData, handleClose, onDelete }) {
                                 type={"button"}
                                 variant={"contained"}
                                 color={"error"}
-                                onClick={handleDelete}
+                                onClick={(_) => setOpenDeleteModal(true)}
                             >
                                 Delete
                             </Button>
