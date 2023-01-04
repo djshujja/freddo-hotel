@@ -19,7 +19,7 @@ export default function FinanceComponent() {
 
     const getTotal = () => {
         let _total = 0;
-        data?.forEach((_d) => (_total += Number(_d?.SubTotal)));
+        data?.forEach((_d) => (_total += Number(_d?.Total)));
         setTotal(_total);
     };
 
